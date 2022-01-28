@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% if review_list %}
+    <ul>
+        {% for review in review_list %}
+            <li><a href = "{% url 'seaview:detail' review.id %}">{{ review.postname }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>리뷰가 없습니다.</p>
+{% endif %}

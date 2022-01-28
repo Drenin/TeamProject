@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import Review
+from django.utils import timezone
 
 # Create your views here.
 def index(request):
@@ -20,3 +21,12 @@ def detail(request, review_id):
     review = get_object_or_404(Review, pk=review_id)
     content = {'review': review}
     return render(request, 'seaview/review_detail.html', content)
+
+def reply_create(request, review_id):
+    """
+    리뷰에 댓글 달기
+    """
+    review = get_object_or_404(Review, pk=review_id)
+    review.reply_set.create(content=request.POST.get('content'),
+                            create_date=timezone.now())
+    return redirect('seaview:detail', review_id=review.id)
