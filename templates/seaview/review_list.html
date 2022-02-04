@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="container my-3">
+    <table class="table">
+        <thead>
+        <tr class="thead-dark">
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성일시</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% if review_list %}
+        {% for review in review_list %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>
+                <a href = "{% url 'seaview:detail' review.id %}">{{ review.postname }}</a>
+            </td>
+            <td>{{ review.create_date }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">리뷰가 없습니다.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
+
+<!--{% if review_list %}-->
+<!--    <ul>-->
+<!--        {% for review in review_list %}-->
+<!--            <li><a href = "{% url 'seaview:detail' review.id %}">{{ review.postname }}</a></li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--{% else %}-->
+<!--    <p>리뷰가 없습니다.</p>-->
+<!--{% endif %}-->
