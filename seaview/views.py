@@ -14,7 +14,7 @@ def index(request):
     # 조회
     review_list = Review.objects.order_by('-create_date')
     # 페이징 처리
-    paginator = Paginator(review_list, 5) # 페이지당 5개씩 보이기
+    paginator = Paginator(review_list, 5) # 페이지 당 5개씩 보이기
     page_obj = paginator.get_page(page)
     content = {'review_list':page_obj}
     return render(request, 'seaview/review_list.html', content)
