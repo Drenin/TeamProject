@@ -8,12 +8,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-<<<<<<< HEAD
 import os
 
-=======
 import os.path
->>>>>>> aa7c4858a368f173b1aae5a3fe6f43e159dee13f
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -132,12 +129,9 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-<<<<<<< HEAD
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
-=======
 LOGIN_REDIRECT_URL = '/seaview/'
 
 LOGOUT_REDIRECT_URL = '/seaview/'
->>>>>>> aa7c4858a368f173b1aae5a3fe6f43e159dee13f
