@@ -2,14 +2,21 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import Review
 from django.utils import timezone
+from django.core.paginator import Paginator
 
 # Create your views here.
 def index(request):
     """
     리뷰 목록 출력
     """
+    # 입력인자
+    page = request.GET.get('page', '1') #페이지
+    # 조회
     review_list = Review.objects.order_by('-create_date')
-    content = {'review_list':review_list}
+    # 페이징 처리
+    paginator = Paginator(review_list, 5) # 페이지 당 5개씩 보이기
+    page_obj = paginator.get_page(page)
+    content = {'review_list':page_obj}
     return render(request, 'seaview/review_list.html', content)
     #return HttpResponse("Hello World")
 

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %} - Register {% endblock %}
+
+{% block content %}
+
+<div class = "row">
+    <div class = "col-md-2"></div>
+    <div class = "col-md-8 panel panel-default">
+        <div class = "alert alert-info">가입을 환영합니다.</div>
+    </div>
+    <a href = "{% url 'login' %}" class = "btn btn-info">로그인하기</a>
+    <div class="col-md-2"></div>
+</div>
+
+{% endblock %}
