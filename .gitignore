@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .idea
 db.sqlite3
 *.pyc
@@ -6,5 +5,4 @@ db.sqlite3
 .idea
 db.sqlite3
 *.pyc
->>>>>>> 8493a5f75dbb7f5f24bc68e973b620c7ea8a627d
 __pycache__
