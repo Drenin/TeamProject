@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+import datetime
+
 
 import os.path
 
@@ -40,6 +42,9 @@ INSTALLED_APPS = [
     'seaview',
     'accounts',
     'subsite',
+    'movieapi',
+    # 'rest_framework',
+
 ]
 
 MIDDLEWARE = [
@@ -108,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ko-kr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -135,3 +140,6 @@ MEDIA_URL = '/media/'
 LOGIN_REDIRECT_URL = '/seaview/'
 
 LOGOUT_REDIRECT_URL = '/seaview/'
+
+STATIC_URL = '/static/'
+
