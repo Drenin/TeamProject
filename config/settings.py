@@ -6,12 +6,9 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
 from pathlib import Path
 import os
 import datetime
-
-
 import os.path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -43,8 +40,7 @@ INSTALLED_APPS = [
     'accounts',
     'subsite',
     'movieapi',
-    # 'rest_framework',
-
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
