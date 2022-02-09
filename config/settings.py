@@ -137,5 +137,5 @@ LOGIN_REDIRECT_URL = '/seaview/'
 
 LOGOUT_REDIRECT_URL = '/seaview/'
 
-STATIC_URL = '/static/'
+
 
