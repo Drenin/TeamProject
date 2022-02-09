@@ -1,4 +1,10 @@
-<h1> 네이버 영화 검색 API</h1>
+{% extends 'base.html' %}
+
+{% block title %} - 영화 검색 {% endblock %}
+
+{% block content %}
+
+<h3> 네이버 영화 검색 API</h3>
 
 <form action="{% url 'movieapi:api_search' %}" method="GET">
       <input type="text" name="q" placeholder="검색">
@@ -14,3 +20,5 @@
     </ul>
 {% endfor %}
 </div>
+
+{% endblock %}

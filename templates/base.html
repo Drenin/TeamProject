@@ -12,7 +12,7 @@
     <div class  = "container">
         <header class = "header clearfix">
         <nav class = "navbar navbar-expand-lg navbar-light bg-light">
-            <a class = "navbar-brand" href = "/seaview">SeaView</a>
+            <a class = "navbar-brand" href = "seaview/">SeaView</a>
             <ul class = "nav">
                 <li class = "nav-item">
                     <a class = "active nav-link" href = "/seaview">Home</a>
@@ -24,6 +24,9 @@
                 <li class = "nav-item"><a class = "nav-link" href="{% url 'login' %}">로그인</a></li>
                 <li class = "nav-item"><a class = "nav-link" href="{% url 'register' %}">회원가입</a></li>
                 {% endif %}
+                <li class = "nav-item">
+                    <a class = "active nav-link" href = "/seaview/search">영화검색</a>
+                </li>
             </ul>
         </nav>
         </header>
