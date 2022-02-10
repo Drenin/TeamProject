@@ -14,7 +14,9 @@
 {% for item in items %}
     <ul>
         <div>{{ forloop.counter }}
-            <img src="{{item.image}}" alt="" width="110" height="150"> : {{ item.title|safe }} ( {{item.pubDate}} ) : {{ item.director }} :
+            <img src="{{item.image}}" alt="" width="110" height="150">
+            <p>
+                : {{ item.title|safe }} ( {{item.pubDate}} ) : {{ item.director }} :
               {{ item.actor }} 평점 : {{ item.userRating }}
         </div>
     </ul>
