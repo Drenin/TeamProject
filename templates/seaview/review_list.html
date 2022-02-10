@@ -13,33 +13,91 @@
             </div>
         </div>
     </div>
-    <table class="table">
-        <thead>
-        <tr class="thead-dark">
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성일시</th>
-        </tr>
-        </thead>
+<!--    <table class="table">-->
+<!--        <thead>-->
+<!--        <tr class="thead-dark">-->
+<!--            <th>번호</th>-->
+<!--            <th>제목</th>-->
+<!--            <th>작성일시</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
 
-        <tbody>
-        {% if review_list %}
-        {% for review in review_list %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>
-                <a href = "{% url 'seaview:detail' review.id %}">{{ review.postname }}</a>
-            </td>
-            <td>{{ review.create_date }}</td>
-        </tr>
-        {% endfor %}
-        {% else %}
-        <tr>
-            <td colspan="3">리뷰가 없습니다.</td>
-        </tr>
-        {% endif %}
-        </tbody>
-    </table>
+<!--        <tbody>-->
+<!--        {% if review_list %}-->
+<!--        {% for review in review_list %}-->
+<!--        <tr>-->
+<!--            <td>{{ forloop.counter }}</td>-->
+<!--            <td>-->
+<!--                <a href = "{% url 'seaview:detail' review.id %}">{{ review.postname }}</a>-->
+<!--            </td>-->
+<!--            <td>{{ review.create_date }}</td>-->
+<!--        </tr>-->
+<!--        {% endfor %}-->
+<!--        {% else %}-->
+<!--        <tr>-->
+<!--            <td colspan="3">리뷰가 없습니다.</td>-->
+<!--        </tr>-->
+<!--        {% endif %}-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--</div>-->
+
+<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+            $(function() {
+                let y = new Date();
+                y.setDate(y.getDate()-1);
+                let str = y.getFullYear() + "-"
+                + ("0" + (y.getMonth() + 1)).slice(-2) + "-"
+                + ("0" + y.getDate()).slice(-2);
+                $("#date").attr("max",str);
+
+                //버튼의 취소 이벤트
+                $("#closebtn").click(function() {
+                    $("#boxoffice").empty();});
+
+                // 버튼의 클릭 이벤트
+                $("#mybtn").click(function() {
+                    let d = $("#date").val();//YYYY-MM-dd
+                    const regex = /-/g;
+                    let d_str = d.replace(regex,"")//YYYYMMdd
+
+                    let url = "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=7b13871f343eef29d1ff0495460599b3&targetDt="+d_str
+
+                     $.getJSON(url, function(data) {
+                         let movieList = data.boxOfficeResult.dailyBoxOfficeList;
+                         $("#boxoffice").empty();
+                         $("#boxoffice").append(d+" 박스 오피스 순위<br>");
+                         for(let i in movieList){
+                             $("#boxoffice").append("<div class='movie' id="+movieList[i].movieCd+">"+(parseInt(i)+1)+". "+movieList[i].movieNm+" / "+movieList[i].audiAcc+"명</div><hr>");
+                             console.log(movieList[i].movieCd);
+                         }
+                        });
+                });//button click
+                //영화 제목 클릭시 영화 정보 출력
+                $("#boxoffice").on("click",".movie", function(){
+                    let d = $(this);
+                    let movieCd = d.attr("id");
+                    let url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=7b13871f343eef29d1ff0495460599b3&movieCd="+movieCd;
+                    $.getJSON(url,function(res){
+                        let movie = res.movieInfoResult.movieInfo;
+                        d.append("<hr>");
+                        d.append("개봉일 : "+movie.openDt+"<br>");
+                        d.append("감독 : "+movie.directors[0].peopleNm+"<br>");
+                        d.append("주연 : "+movie.actors[0].peopleNm+", "+movie.actors[1].peopleNm+", "+movie.actors[2].peopleNm+"<br>");
+                        d.append("장르 : "+movie.genres[0].genreNm+"<br>");
+                        d.append("상영시간 : "+movie.showTm+"분");
+                        d.append("<hr>");
+
+                    })
+                })
+            });//ready
+</script>
+<h3>박스오피스 순위</h3>
+<input type="date" id="date"><button id="mybtn">확인</button>
+<button id="closebtn">취소</button>
+<div id="boxoffice">
+
 </div>
 
 {% endblock %}
