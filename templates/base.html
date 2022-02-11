@@ -1,5 +1,6 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title> SeaView {% block title %} {% endblock %}</title>
@@ -19,10 +20,10 @@
                 </li>
                 {% if user.is_authenticated %}
                 <li class = "nav-item"><a class = "nav-link" href="#"><strong>{{ user.get_username }}님</strong></a></li>
-                <li class = "nav-item"><a class = "nav-link" href="{% url 'logout' %}">로그아웃</a></li>
+                <li class = "nav-item"><a class = "nav-link" href="{% url 'accounts:logout' %}">로그아웃</a></li>
                 {% else %}
-                <li class = "nav-item"><a class = "nav-link" href="{% url 'login' %}">로그인</a></li>
-                <li class = "nav-item"><a class = "nav-link" href="{% url 'register' %}">회원가입</a></li>
+                <li class = "nav-item"><a class = "nav-link" href="{% url 'accounts:login' %}">로그인</a></li>
+                <li class = "nav-item"><a class = "nav-link" href="{% url 'accounts:register' %}">회원가입</a></li>
                 {% endif %}
                 <li class = "nav-item">
                     <a class = "active nav-link" href = "/seaview/search">영화검색</a>
@@ -30,9 +31,17 @@
             </ul>
         </nav>
         </header>
-        {% block content %}
-        {% endblock %}
+    {% block content %}
+    {% endblock %}
     </div>
 
+
+    <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
+    <!-- Bootstrap JS -->
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+    <!-- 자바스크립트 start -->
+    {% block script %}
+    {% endblock %}
+    <!-- 자바스크립트 end -->
 </body>
 </html>
