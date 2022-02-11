@@ -18,6 +18,7 @@
         <tr class="thead-dark">
             <th>번호</th>
             <th>제목</th>
+            <th>작성자</th>
             <th>작성일시</th>
         </tr>
         </thead>
@@ -30,6 +31,7 @@
             <td>
                 <a href = "{% url 'seaview:detail' review.id %}">{{ review.postname }}</a>
             </td>
+            <td>{{ review.author_id }}</td>
             <td>{{ review.create_date }}</td>
         </tr>
         {% endfor %}

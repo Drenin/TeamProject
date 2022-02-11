@@ -4,6 +4,7 @@ from .models import Review
 from django.utils import timezone
 from django.core.paginator import Paginator
 from .forms import ReviewForm, ReplyForm
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -31,15 +32,19 @@ def detail(request, review_id):
     context = {'review': review}
     return render(request, 'seaview/review_detail.html', context)
 
+@login_required(login_url='common:login')
 def reply_create(request, review_id):
     """
     리뷰에 댓글 달기
     """
     review = get_object_or_404(Review, pk=review_id)
+    review.reply_set.create(content=request.POST.get('content'),
+                            create_date=timezone.now())
     if request.method == "POST":
         form = ReplyForm(request.POST)
         if form.is_valid():
             reply = form.save(commit=False)
+            reply.author = request.user # author 속성
             reply.create_date = timezone.now()
             reply.review = review
             reply.save()
@@ -49,15 +54,16 @@ def reply_create(request, review_id):
     context = {'review': review, 'form': form}
     return render(request, 'seaview/review_detail.html', context)
 
-
+@login_required(login_url='common:login')
 def review_create(request):
     """
-    질문등록
+    리뷰 등록
     """
     if request.method == 'POST':
         form = ReviewForm(request.POST)
         if form.is_valid():
             review = form.save(commit=False)
+            review.author_id = request.user
             review.create_date = timezone.now()
             review.save()
             return redirect('seaview:index')
