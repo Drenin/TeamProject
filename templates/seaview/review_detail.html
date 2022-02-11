@@ -38,23 +38,3 @@
 
 {% endblock %}
 
-<!--<h1>{{ review.postname }}</h1>-->
-
-<!--<div>-->
-<!--    {{ review.content }}-->
-<!--</div>-->
-
-<!--<h5>{{ review.reply_set.count }}개의 댓글이 있습니다.</h5>-->
-<!--<div>-->
-<!--    <ul>-->
-<!--        {% for reply in review.reply_set.all %}-->
-<!--            <li>{{ reply.content }}</li>-->
-<!--        {% endfor %}-->
-<!--    </ul>-->
-<!--</div>-->
-
-<!--<form action="{% url 'seaview:reply_create' review.id %}" method="post">-->
-<!--{% csrf_token %}-->
-<!--<textarea name = "content" id="content" rows="13"></textarea>-->
-<!--<input type="submit" value="등록">-->
-<!--</form>-->
