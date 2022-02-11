@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'accounts',
     'subsite',
     'movieapi',
-    'rest_framework',
+
 ]
 
 MIDDLEWARE = [

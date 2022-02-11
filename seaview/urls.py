@@ -7,6 +7,9 @@ app_name = 'seaview'
 urlpatterns = [
     path('', views.index, name = 'index'),
     path('<int:review_id>/', views.detail, name = 'detail'),
-    #path('reply/create/<int:review_id>/', views.reply_create, name='reply_create'),
+    path('reply/create/<int:review_id>/', views.reply_create, name='reply_create'),
     path('search/', include('movieapi.urls')),
+    path('review/create/', views.review_create, name='review_create'),
+    path('seaview/modify/<int:review_id>/', views.review_modify, name='review_modify'),
+    path('review/delete/<int:review_id>/', views.review_delete, name='review_delete'),
 ]
