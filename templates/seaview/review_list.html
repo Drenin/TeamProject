@@ -28,10 +28,12 @@
         {% for review in review_list %}
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td>
+            <td class="text-left">
                 <a href = "{% url 'seaview:detail' review.id %}">{{ review.postname }}</a>
-            </td>
-            <td>{{ review.author_id }}</td>
+                {% if review.reply_set.count > 0 %}
+                <span class="text-danger small ml-2">{{ review.reply_set.count }}</span>
+                {% endif %}
+            <td>{{ review.author.username }}</td>  <!-- 글쓴이 추가 -->
             <td>{{ review.create_date }}</td>
         </tr>
         {% endfor %}
@@ -42,6 +44,47 @@
         {% endif %}
         </tbody>
     </table>
+
+        <!-- 페이징처리 시작 -->
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if review_list.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ review_list.previous_page_number }}">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        <!-- 페이지리스트 -->
+        {% for page_number in review_list.paginator.page_range %}
+        {% if page_number >= review_list.number|add:-3 and page_number <= review_list.number|add:3 %}
+            {% if page_number == review_list.number %}
+            <li class="page-item active" aria-current="page">
+                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+            </li>
+            {% endif %}
+        {% endif %}
+        {% endfor %}
+
+        <!-- 다음페이지 -->
+        {% if review_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ review_list.next_page_number }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- 페이징처리 끝 -->
+
     <a href="{% url 'seaview:review_create' %}" class="btn btn-primary">글쓰기</a>
 </div>
 
