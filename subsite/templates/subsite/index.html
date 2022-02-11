@@ -13,6 +13,12 @@
                 + ("0" + y.getDate()).slice(-2);
                 $("#date").attr("max",str);
 
+
+                //사이트가 열렸을 때 이벤트
+                $(document).ready(function(){
+                    alert("Hello")
+                });
+
                 //버튼의 취소 이벤트
                 $("#closebtn").click(function() {
                     $("#boxoffice").empty();});
@@ -25,14 +31,14 @@
 
                     let url = "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=7b13871f343eef29d1ff0495460599b3&targetDt="+d_str
 
-                     $.getJSON(url, function(data) {
-                         let movieList = data.boxOfficeResult.dailyBoxOfficeList;
-                         $("#boxoffice").empty();
-                         $("#boxoffice").append(d+" 박스 오피스 순위<br>");
-                         for(let i in movieList){
-                             $("#boxoffice").append("<div class='movie' id="+movieList[i].movieCd+">"+(parseInt(i)+1)+". "+movieList[i].movieNm+" / "+movieList[i].audiAcc+"명</div><hr>");
-                             console.log(movieList[i].movieCd);
-                         }
+                    $.getJSON(url, function(data) {
+                        let movieList = data.boxOfficeResult.dailyBoxOfficeList;
+                        $("#boxoffice").empty();
+                        $("#boxoffice").append(d+" 박스 오피스 순위<br>");
+                        for(let i in movieList){
+                            $("#boxoffice").append("<div class='movie' id="+movieList[i].movieCd+">"+(parseInt(i)+1)+". "+movieList[i].movieNm+" / "+movieList[i].audiAcc+"명</div><hr>");
+                            console.log(movieList[i].movieCd);
+                        }
                         });
                 });//button click
                 //영화 제목 클릭시 영화 정보 출력
@@ -53,6 +59,7 @@
                     })
                 })
             });//ready
+
         </script>
 
 </head>

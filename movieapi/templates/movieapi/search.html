@@ -14,10 +14,12 @@
 {% for item in items %}
     <ul>
         <div>{{ forloop.counter }}
-            <img src="{{item.image}}" alt="" width="110" height="150">
+            <a href = "{{ item.link }}" target = "_self">
+                <img src = "{{item.image}}" alt="이미지가 존재하지 않습니다." width="110" height="150"/>
+            </a>
             <p>
-                : {{ item.title|safe }} ( {{item.pubDate}} ) : {{ item.director }} :
-              {{ item.actor }} 평점 : {{ item.userRating }}
+                 ㅁ제목 : {{ item.title|safe }} ( {{item.pubDate}} ) ㅁ감독 : {{ item.director }} ㅁ배우 :
+              {{ item.actor }} ㅁ평점 : {{ item.userRating }}
         </div>
     </ul>
 {% endfor %}
