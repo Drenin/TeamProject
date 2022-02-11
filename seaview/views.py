@@ -111,9 +111,9 @@ def reply_delete(request, reply_id):
     """
     댓글삭제
     """
-    reply = get_object_or_404(Reply, pk=reply_id)
+    reply = get_object_or_404(Reply, pk= reply_id)
     if request.user != reply.author:
         messages.error(request, '삭제권한이 없습니다')
-        return redirect('seaview:detail', reply_id=reply.id)
-    reply.delete()
-    return redirect('seaview:index')
+    else:
+        reply.delete()
+    return redirect('seaview:detail', review_id = reply.review.id)
