@@ -23,25 +23,35 @@
         {% endif %}
         </div>
     </div>
-    <h5 class="border-bottom my-3 py-2">{{review.reply_set.count}}개의 댓글이 있습니다.</h5>
+    <h5 class="border-bottom my-3 py-2">{{ review.reply_set.count }}개의 댓글이 있습니다.</h5>
     <div class="card my-3">
         <div class="card-body">
-            <div class="card-text" style="white-space: pre-line;">{{ reply.content }}</div>
+            <div class="card-text" style="white-space: pre-line;">
+                <ul>
+                    {% for reply in review.reply_set.all %}
+                        <li>{{ reply.content }}</li>
+                    {% endfor %}
+                </ul>
             <div class="d-flex justify-content-end">
                 <div class="badge badge-light p-2">
                     {{ reply.author.username }},    {{ reply.create_date }}
                 </div>
             </div>
+               {% if request.user == review.author %}
+            <div class="my-3">
+            <a href="#" class="delete btn btn-sm btn-outline-secondary"
+               data-uri="{% url 'seaview:reply_delete' reply.id  %}">삭제</a>
+            </div>
+        {% endif %}
         </div>
     </div>
-    {% endfor %}
 
     <form action="{% url 'seaview:reply_create' review.id %}"
-          method="post" class="my-3">
+          method="post">
         {% csrf_token %}
         <div class="form-group">
             <textarea {% if not user.is_authenticated %}disabled{% endif %}
-                      name = "content" id="content" rows="13"></textarea>
+                      name = "content" id="content" rows="10"></textarea>
         </div>
         <input type="submit" value="등록" class="btn btn-primary">
     </form>

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from .models import Review
+from .models import Review, Reply
 from django.utils import timezone
 from django.core.paginator import Paginator
 from .forms import ReviewForm, ReplyForm
@@ -104,4 +104,16 @@ def review_delete(request, review_id):
         messages.error(request, '삭제권한이 없습니다')
         return redirect('seaview:detail', review_id=review.id)
     review.delete()
+    return redirect('seaview:index')
+
+@login_required(login_url='accounts:login')
+def reply_delete(request, reply_id):
+    """
+    댓글삭제
+    """
+    reply = get_object_or_404(Reply, pk=reply_id)
+    if request.user != reply.author:
+        messages.error(request, '삭제권한이 없습니다')
+        return redirect('seaview:detail', reply_id=reply.id)
+    reply.delete()
     return redirect('seaview:index')
