@@ -47,8 +47,7 @@
                 {% if review.reply_set.count > 0 %}
                 <span class="text-danger small ml-2">{{ review.reply_set.count }}</span>
                 {% endif %}
-            </td>
-             <td>{{ review.author.username }}</td>  <!-- 글쓴이 추가 -->
+            <td>{{ review.author.username }}</td>  <!-- 글쓴이 추가 -->
             <td>{{ review.create_date }}</td>
         </tr>
         {% endfor %}
