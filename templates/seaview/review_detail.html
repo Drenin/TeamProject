@@ -86,13 +86,14 @@
 {% endblock %}
 
 {% block script %}
-<script type='xt/javascript'>
+<script type='text/javascript'>
 $(document).ready(function(){
     $(".delete").on('click', function() {
         if(confirm("정말로 삭제하시겠습니까?")) {
             location.href = $(this).data('uri');
         }
     });
+
     $(".recommend").on('click', function() {
         if(confirm("정말로 추천하시겠습니까?")) {
             location.href = $(this).data('uri');
