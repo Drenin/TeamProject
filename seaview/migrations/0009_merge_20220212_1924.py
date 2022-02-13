@@ -5,10 +5,10 @@ from django.db import migrations
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('seaview', '0008_alter_reply_author_alter_review_author'),
-        ('seaview', '0008_auto_20220211_1528'),
-    ]
+    #dependencies = [
+    #    ('seaview', '0008_alter_reply_author_alter_review_author'),
+    #    ('seaview', '0008_auto_20220211_1528'),
+    #]
 
     operations = [
     ]
