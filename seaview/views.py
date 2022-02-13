@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .models import Review, Reply
 from django.utils import timezone
 from django.core.paginator import Paginator
-from .forms import ReviewForm, ReplyForm
+from .forms import ReviewForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
@@ -19,8 +19,9 @@ def index(request):
     # 페이징 처리
     paginator = Paginator(review_list, 5) # 페이지 당 5개씩 보이기
     page_obj = paginator.get_page(page)
+    max_page = len(paginator.page_range)
 
-    context = {'review_list':page_obj}
+    context = {'review_list':page_obj, 'max_page':max_page}
     return render(request, 'seaview/review_list.html', context)
     #return HttpResponse("Hello World")
 
@@ -117,3 +118,16 @@ def reply_delete(request, reply_id):
     else:
         reply.delete()
     return redirect('seaview:detail', review_id = reply.review.id)
+
+
+@login_required(login_url='accounts:login')
+def vote_review(request, review_id):
+    """
+    추천
+    """
+    review = get_object_or_404(Review, pk=review_id)
+    if request.user == review.author:
+        messages.error(request, '본인이 작성한 글은 추천할 수 없습니다')
+    else:
+        review.voter.add(request.user)
+    return redirect('seaview:detail', review_id=review.id)
