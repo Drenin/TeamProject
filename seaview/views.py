@@ -6,6 +6,8 @@ from django.core.paginator import Paginator
 from .forms import ReviewForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import Q
+
 
 # Create your views here.
 def index(request):
@@ -14,14 +16,22 @@ def index(request):
     """
     # 입력인자
     page = request.GET.get('page', '1') #페이지
+    kw = request.GET.get('kw','') #검색어
+
     # 조회
     review_list = Review.objects.order_by('-create_date')
+    if kw:
+        review_list = review_list.filter(
+            Q(postname__icontains=kw) |  #제목검색
+            Q(author__username__icontains=kw)  #글쓴이 검색
+        ).distinct()
+
     # 페이징 처리
     paginator = Paginator(review_list, 5) # 페이지 당 5개씩 보이기
     page_obj = paginator.get_page(page)
     max_page = len(paginator.page_range)
 
-    context = {'review_list':page_obj, 'max_page':max_page}
+    context = {'review_list':page_obj, 'max_page':max_page, 'page': page, 'kw': kw}
     return render(request, 'seaview/review_list.html', context)
     #return HttpResponse("Hello World")
 
