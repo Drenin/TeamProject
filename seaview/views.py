@@ -118,6 +118,29 @@ def review_delete(request, review_id):
     return redirect('seaview:index')
 
 @login_required(login_url='accounts:login')
+def reply_modify(request, reply_id):
+    """
+    댓글수정
+    """
+    reply = get_object_or_404(Reply, pk=reply_id)
+    if request.user != reply.author:
+        messages.error(request, '수정권한이 없습니다.')
+        return redirect('seaview:detail', review_id=reply.review.id)
+
+    if request.method == "POST":
+        form = ReplyForm(request.POST, instance=reply)
+        if form.is_valid():
+            reply = form.save(commit=False)
+            reply.author = request.user
+            reply.modify_date = timezone.now()
+            reply.save()
+            return redirect('seaview:detail', review_id=reply.review.id)
+        else:
+            form = ReplyForm(instance=reply)
+        context = {'reply': reply, 'form': form}
+        return render(request, 'seaview/reply_form.html', context)
+
+@login_required(login_url='accounts:login')
 def reply_delete(request, reply_id):
     """
     댓글삭제
@@ -128,7 +151,6 @@ def reply_delete(request, reply_id):
     else:
         reply.delete()
     return redirect('seaview:detail', review_id = reply.review.id)
-
 
 @login_required(login_url='accounts:login')
 def vote_review(request, review_id):
