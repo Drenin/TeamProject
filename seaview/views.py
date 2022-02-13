@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .models import Review, Reply
 from django.utils import timezone
 from django.core.paginator import Paginator
-from .forms import ReviewForm
+from .forms import ReviewForm, ReplyForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
