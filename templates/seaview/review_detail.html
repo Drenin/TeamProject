@@ -13,7 +13,6 @@
     </div>
     {% endif %}
 
-
     <h2 class="border-bottom py-2">{{ review.postname }}</h2>
     <div class="row my-3">
         <div class="col-1"> <!-- 추천영역 -->
@@ -21,50 +20,78 @@
             <a href="#" data-uri="{% url 'seaview:vote_review' review.id  %}"
                class="recommend btn btn-sm btn-secondary btn-block my-1">추천</a>
         </div>
-    <div class="col-11">
-        <div class="card">
-            <div class="card-body">
-                <div class="card-text" style="white-space: pre-line;">{{ review.content }}</div>
-                <div class="d-flex justify-content-end">
-                    <div class="badge badge-light p-2">
-                        {{ review.author.username }},    {{ review.create_date }}
+        <div class="col-11">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-text" style="white-space: pre-line;">{{ review.content }}</div>
+                    <div class="d-flex justify-content-end">
+                        <div class="badge badge-light p-2">
+                            {{ review.author.username }},    {{ review.create_date }}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
             <!--수정버튼-->
             {% if request.user == review.author %}
             <div class="my-3">
-            <a href="{% url 'seaview:review_modify' review.id  %}"
+            <a href="{% url 'seaview:review_modify' review.id %}"
                class="btn btn-sm btn-outline-secondary">수정</a>
             <a href="#" class="delete btn btn-sm btn-outline-secondary"
                data-uri="{% url 'seaview:review_delete' review.id  %}">삭제</a>
             </div>
-        {% endif %}
+            {% endif %}
         </div>
     </div>
 
-
+<!-- 댓글부분 -->
     <h5 class="border-bottom my-3 py-2">{{ review.reply_set.count }}개의 댓글이 있습니다.</h5>
     {% for reply in review.reply_set.all %}
-    <div class ="card my-3">
-        <div class ="card-body">
-            <div class = "card-text" style = "while-space:pre-line;"> {{ reply.content }}</div>
-            <div class = "d-flex justify-content-end">
+    <div class = "card my-3">
+        <div class = "card-body">
+            <div class = "card-text" style = "white-space: pre-line;">{{ reply.content }}</div>
+
+
+            <div class="my-3">
+                <a href = "{% url 'seaview:reply_modify' reply.id %}"
+                   class = "btn btn-sm btn-outline-secondary">수정</a>
+                <a href = "#"
+                   class="delete btn btn-sm btn-outline-secondary"
+                   data-uri="{% url 'seaview:reply_delete' reply.id %}">삭제</a>
+            </div>
+
+
+            <div class="d-flex justify-content-end">
+                {% if reply.modify_date %}
+                <div class = "badge badge-light p-2 text-left mx-3">
+                    <div class="mb-2"> modified at </div>
+                    <div> {{ reply.modify_date }} </div>
+                </div>
+                {% endif %}
                 <div class = "badge badge-light p-2 text-left">
-                    <div> {{reply.author.username }}, {{reply.create_date}} </div>
+                    <div> {{reply.author.username }},   {{reply.create_date}}</div>
                 </div>
             </div>
         </div>
     </div>
     {% endfor %}
 
-    <form action="{% url 'seaview:reply_create' review.id %}"
-          method="post">
+    <form action="{% url 'seaview:reply_create' reply.id %}"
+          method="post" class = "my-3">
         {% csrf_token %}
-        <div class="form-group">
-            <textarea {% if not user.is_authenticated %}disabled{% endif %}
-                      name = "content" id="content" rows="10"></textarea>
+        {% if form.errors %}
+        <div class ="alert alert-danger" role="alert">
+            {% for field in form %}
+                {% if field.errors %}
+                <strong>{{ field.label }}</strong>
+                {{ field.errors }}
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="form-group">
+        <textarea {% if not user.is_authenticated %} disabled {% endif %}
+                  name = "content" id="content" rows="10" class ="form-control"></textarea>
         </div>
         <input type="submit" value="등록" class="btn btn-primary">
     </form>
