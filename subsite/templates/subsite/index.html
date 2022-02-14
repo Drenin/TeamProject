@@ -13,11 +13,23 @@
                 + ("0" + y.getDate()).slice(-2);
                 $("#date").attr("max",str);
 
+                //랜덤 영화 추천
+                $("#randombtn").click(function() {
+                    let ran_M = Math.floor(Math.random() * 10 + 100)
+                    let ran_D = Math.floor(Math.random() * 30 + 1)
+                    let r = 20200000 + ran_M + ran_D
 
-                //사이트가 열렸을 때 이벤트
-                $(document).ready(function(){
-                    alert("Hello")
+                    let url = "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=7b13871f343eef29d1ff0495460599b3&targetDt="+r
+                    $.getJSON(url, function(data) {
+                        let movieList = data.boxOfficeResult.dailyBoxOfficeList;
+                        $("#boxoffice").empty();
+                        for(let i in movieList){
+                            $("#boxoffice").append("<div class='movie' id="+movieList[i].movieCd+">"+movieList[i].movieNm+"</div><hr>");
+                            console.log(movieList[i].movieCd);
+                        }
+                        });
                 });
+
 
                 //버튼의 취소 이벤트
                 $("#closebtn").click(function() {
@@ -66,6 +78,7 @@
 <body>
 <input type="date" id="date"><button id="mybtn">확인</button>
 <button id="closebtn">취소</button>
+<button id="randombtn">영화추천</button>
 <div id="boxoffice">
     박스 오피스 순위<br>
 </div>

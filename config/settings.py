@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'accounts',
     'subsite',
     'movieapi',
+    'rest_framework',
+    'corsheaders',
 
 ]
 
@@ -51,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -136,6 +139,10 @@ MEDIA_URL = '/media/'
 LOGIN_REDIRECT_URL = '/seaview/'
 
 LOGOUT_REDIRECT_URL = '/seaview/'
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8080',
+]
 
 
 

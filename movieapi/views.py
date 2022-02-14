@@ -25,7 +25,7 @@ def search(request):
             response_body = response.read()
             result = json.loads(response_body.decode('utf-8'))
             items = result.get('items')
-            pprint(result)  # request를 예쁘게 출력해볼 수 있다.
+            pprint(result)
 
             context = {
                 'items': items
