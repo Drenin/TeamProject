@@ -16,8 +16,8 @@ class Review(models.Model):
         return self.postname
 
 class Reply(models.Model):
-    postname = models.ForeignKey(Review, on_delete=models.CASCADE)
+    postname = models.ForeignKey(Review, on_delete=models.CASCADE, null=True, blank=True)
     content = models.TextField()
     create_date = models.DateTimeField()
     modify_date = models.DateTimeField(null=True, blank=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_reply')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_reply', null=True, blank=True)

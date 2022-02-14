@@ -50,6 +50,7 @@ def reply_create(request, review_id):
     리뷰에 댓글 달기
     """
     review = get_object_or_404(Review, pk=review_id)
+
     review.reply_set.create(content=request.POST.get('content'),
                             create_date=timezone.now())
     if request.method == "POST":
@@ -63,6 +64,7 @@ def reply_create(request, review_id):
             return redirect('seaview:detail', review_id=review.id)
     else:
         form = ReplyForm()
+
     context = {'review': review, 'form': form}
     return render(request, 'seaview/review_detail.html', context)
 
@@ -89,7 +91,7 @@ def review_create(request):
 @login_required(login_url='accounts:login')
 def review_modify(request, review_id):
     """
-    질문수정
+    리뷰 수정
     """
     review = get_object_or_404(Review, pk=review_id)
     if request.method == "POST":
@@ -108,7 +110,7 @@ def review_modify(request, review_id):
 @login_required(login_url='accounts:login')
 def review_delete(request, review_id):
     """
-    질문삭제
+    리뷰 삭제
     """
     review = get_object_or_404(Review, pk=review_id)
     if request.user != review.author:
@@ -122,10 +124,10 @@ def reply_modify(request, reply_id):
     """
     댓글수정
     """
-    reply = get_object_or_404(Reply, pk=reply_id)
+    reply = get_object_or_404(Reply, pk = reply_id)
     if request.user != reply.author:
         messages.error(request, '수정권한이 없습니다.')
-        return redirect('seaview:detail', review_id=reply.review.id)
+        return redirect('seaview:detail', review_id = reply.review.id)
 
     if request.method == "POST":
         form = ReplyForm(request.POST, instance=reply)
@@ -137,6 +139,7 @@ def reply_modify(request, reply_id):
             return redirect('seaview:detail', review_id=reply.review.id)
         else:
             form = ReplyForm(instance=reply)
+
         context = {'reply': reply, 'form': form}
         return render(request, 'seaview/reply_form.html', context)
 
