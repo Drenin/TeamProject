@@ -75,7 +75,7 @@
     </div>
     {% endfor %}
 
-    <form action="{% url 'seaview:reply_create' reply.id %}"
+    <form action="{% url 'seaview:reply_create' review.id %}"
           method="post" class = "my-3">
         {% csrf_token %}
         {% if form.errors %}
