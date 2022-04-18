@@ -19,7 +19,7 @@
                     let ran_D = Math.floor(Math.random() * 30 + 1)
                     let r = 20200000 + ran_M + ran_D
 
-                    let url = "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=7b13871f343eef29d1ff0495460599b3&targetDt="+r
+                    let url = "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=발급받은 키 값&targetDt="+r
                     $.getJSON(url, function(data) {
                         let movieList = data.boxOfficeResult.dailyBoxOfficeList;
                         $("#boxoffice").empty();
@@ -41,7 +41,7 @@
                     const regex = /-/g;
                     let d_str = d.replace(regex,"")//YYYYMMdd
 
-                    let url = "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=7b13871f343eef29d1ff0495460599b3&targetDt="+d_str
+                    let url = "http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=발급받은 키 값&targetDt="+d_str
 
                     $.getJSON(url, function(data) {
                         let movieList = data.boxOfficeResult.dailyBoxOfficeList;
@@ -57,7 +57,7 @@
                 $("#boxoffice").on("click",".movie", function(){
                     let d = $(this);
                     let movieCd = d.attr("id");
-                    let url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=7b13871f343eef29d1ff0495460599b3&movieCd="+movieCd;
+                    let url = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=발급받은 키 값&movieCd="+movieCd;
                     $.getJSON(url,function(res){
                         let movie = res.movieInfoResult.movieInfo;
                         d.append("<hr>");
