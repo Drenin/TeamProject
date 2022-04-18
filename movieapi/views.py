@@ -10,8 +10,8 @@ def index(request):
 def search(request):
     if request.method == 'GET':
 
-        client_id = "KlprWhGAWT4tBdDoIeiJ"
-        client_secret = "fKcAPsVDyv"
+        client_id = "받아온 API ID"
+        client_secret = "받아온 API PW"
 
         q = request.GET.get('q')
         encText = urllib.parse.quote("{}".format(q))
